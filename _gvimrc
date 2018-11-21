@@ -1,0 +1,52 @@
+" An example for a gvimrc file.
+" The commands in this are executed when the GUI is started, after the vimrc
+" has been executed.
+"
+" Maintainer:	Bram Moolenaar <Bram@vim.org>
+" Last change:	2016 Apr 05
+"
+" To use it, copy it to
+"     for Unix and OS/2:  ~/.gvimrc
+"	      for Amiga:  s:.gvimrc
+"  for MS-DOS and Win32:  $VIM\_gvimrc
+"	    for OpenVMS:  sys$login:.gvimrc
+
+" Make external commands work through a pipe instead of a pseudo-tty
+"set noguipty
+
+" set the X11 font to use
+" set guifont=-misc-fixed-medium-r-normal--14-130-75-75-c-70-iso8859-1
+set guifont=Hack:h12:cANSI:qDRAFT
+colorscheme evening
+set guioptions -=T
+set guioptions -=m
+
+" set font size jjjjjjjjjjjjjjjj
+let g:fnt_size = 16
+
+function! ResetFont ()
+  if has('gui_running')
+    exe ':set guifont=Hack:h'.g:fnt_size.':cANSI:qDRAFT'
+  endif
+endfunction
+
+call ResetFont()
+
+function! FontSizePlus ()
+  let g:fnt_size = g:fnt_size + 2
+  if g:fnt_size > 54
+    let g:fnt_size = 54
+  endif
+  call ResetFont()
+endfunction
+
+function! FontSizeMinus ()
+  let g:fnt_size = g:fnt_size - 2 
+  if g:fnt_size < 10
+    let g:fnt_size = 12
+  endif
+  call ResetFont()
+endfunction
+
+nmap <F12> :call FontSizePlus()<cr>
+nmap <S-F12> :call FontSizeMinus()<cr>
